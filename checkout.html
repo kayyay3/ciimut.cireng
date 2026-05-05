@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ciimut - Checkout</title>
+    <link rel="stylesheet" href="css/checkout.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header class="header">
+        <div class="logo-section">
+            <div class="logo-container">
+                <img src="aset/WhatsApp Image 2026-04-14 at 09.19.52.jpeg" alt="Logo Ciimut" class="main-logo">
+            </div>
+            <div>
+                <a href="home.html" class="logo-link">
+                    <h2 class="brand-name-small">Ciimut</h2> 
+                    <p class="sub-brand">Camilan Enak & Lezat</p>
+                </a>
+            </div>
+        </div>
+        <a href="order.html" class="back-link">← Kembali ke Menu</a>
+    </header>
+
+    <main class="container">
+        <h3 class="page-title">Konfirmasi Pesanan</h3>
+
+        <div class="checkout-wrapper">
+            <div class="order-summary">
+                <h4>Pesanan Kamu</h4>
+                <div class="order-items">
+                    <div class="item">
+                        <span>Cireng Isi Keju (x2)</span>
+                        <span>Rp 37.800</span>
+                    </div>
+                    <div class="item">
+                        <span>Cireng Isi Ayam (x1)</span>
+                        <span>Rp 22.900</span>
+                    </div>
+                    <div class="item divider"></div>
+                    <div class="item total">
+                        <span>Total Bayar</span>
+                        <span class="total-price">Rp 60.700</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="checkout-form">
+                <h4>Detail Pengiriman</h4>
+                <form>
+                    <div class="input-group">
+                        <label>Nama Lengkap</label>
+                        <input type="text" placeholder="Masukkan nama kamu" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Nomor WhatsApp</label>
+                        <input type="tel" placeholder="Contoh: 08123456789" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Alamat Lengkap</label>
+                        <textarea placeholder="Tulis alamat pengiriman secara detail"></textarea>
+                    </div>
+                    <button type="submit" class="btn-confirm">Pesan Sekarang via WhatsApp</button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <div class="shape-bg"></div>
+
+    <script src="script.js"></script>
+    
+</body>
+</html>
