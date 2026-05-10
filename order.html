@@ -15,7 +15,7 @@
         <img src="aset/WhatsApp Image 2026-04-14 at 09.19.52.jpeg" alt="Logo Ciimut" class="main-logo">
     </div>
     <div>
-        <a href="index.html" class="logo-link">
+        <a href="home.html" class="logo-link">
             <h2 class="brand-name-small">Ciimut</h2> 
             <p class="sub-brand">Camilan Enak & Lezat</p>
         </a>
@@ -29,52 +29,67 @@
         </div>
     </header>
 
-    <main class="container">
-        <h3 class="category-title">Menu Utama</h3>
+   <main class="container">
+        <h3 class="category-title">PILIH PAKET BOX</h3>
+        <p style="margin-bottom: 20px; color: #666;">Promo pre-order special grand opening Ciimut. <br>
+             + 1 free Chili oil untuk semua ukuran box. <br> <span style="color: #e67e22;">🔥 Free Chili Oil !!!</span></p>
         
         <div class="menu-grid">
             <div class="card">
                 <div class="card-img">
-                    <img src="aset/Cireng Isi Keju Lumer _Ayam Suwir_Baso Mercon_Jando_Sosis Pedas 8 Pcs Cemilan Frozen Food.jfif" alt="Cireng Keju">
+                    <img src="aset/Cireng Isi Keju Lumer _Ayam Suwir_Baso Mercon_Jando_Sosis Pedas 8 Pcs Cemilan Frozen Food.jfif" alt="Box Kecil">
                 </div>
                 <div class="card-body">
-                    <h4>Cireng Isi Keju</h4>
-                    <p>Cireng kenyal dengan isian keju mozarella lumer yang gurih.</p>
-                    <div class="price">Rp 18.900</div>
-                    <button class="btn-add">+ Tambah ke Keranjang</button>
+                    <h4>1 Box Kecil</h4>
+                    <p>berisi 4 cireng yang bisa dipilih untuk varian dan bisa di mix juga.</p>
+                    <div class="price">Rp 8.000</div>
+                    <button class="btn-add" onclick="prepareOrder(this)">PILIH</button>
                 </div>
             </div>
 
             <div class="card">
                 <div class="card-img">
-                    <img src="aset/CIRENG AYAM SUIR ISI 8.jpg" alt="Cireng Ayam Suwir">
+                    <img src="aset/CIRENG AYAM SUIR ISI 8.jpg" alt="Box Besar">
                 </div>
                 <div class="card-body">
-                    <h4>Cireng Isi Ayam</h4>
-                    <p>Isian ayam suir pedas manis dengan bumbu rempah pilihan.</p>
-                    <div class="price">Rp 12.500</div>
-                    <button class="btn-add">+ Tambah ke Keranjang</button>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-img">
-                    <img src="aset/Cireng Buncit isi sosis pedas isi 15.jpg" alt="Salad Buah">
-                </div>
-                <div class="card-body">
-                    <h4>Cireng Isi Kornet</h4>
-                    <p>Isian kornet dengan rasa yang sangat gurih & sedap. Cocok dinikmati saat santai bersama teman.</p>
-                    <div class="price">Rp 24.900</div>
-                    <button class="btn-add">+ Tambah ke Keranjang</button>
+                    <h4>1 Box Besar</h4>
+                    <p>Porsi lebih puas! Mix varian sesukamu (Ayam Suwir, Keju, Kornet) + free chili oil.</p>
+                    <div class="price">Rp 10.000</div>
+                    <button class="btn-add" onclick="prepareOrder(this)">PILIH</button>
                 </div>
             </div>
         </div>
     </main>
 
-    <div class="shape shape-bg"></div>
+    <div id="modal-flavor" class="modal" style="display: none;">
+    <div class="modal-content">
+        <h3 id="modal-item-name">Pilih Varian</h3>
+       <div class="flavor-options">
+    <div class="option-item">
+        <input type="radio" id="ayam" name="flavor" class="flavor-cb" value="Ayam Suwir">
+        <label for="ayam">Ayam Suwir</label>
+    </div>
+    <div class="option-item">
+        <input type="radio" id="keju" name="flavor" class="flavor-cb" value="Keju">
+        <label for="keju">Keju</label>
+    </div>
+    <div class="option-item">
+        <input type="radio" id="kornet" name="flavor" class="flavor-cb" value="Kornet">
+        <label for="kornet">Kornet</label>
+    </div>
+    <div class="option-item">
+        <input type="radio" id="mix" name="flavor" class="flavor-cb" value="Mix">
+        <label for="mix">Mix</label>
+    </div>
+</div>
+        <div class="modal-footer">
+            <button type="button" class="btn-secondary" onclick="closeModal()">Batal</button>
+            <button type="button" class="btn-primary" onclick="confirmOrder()">OK</button>
+        </div>
+    </div>
+</div>
 
-    <script src="script.js"></script>
-
+<script src="script.js"></script>
 </body>
 
 <div id="toast" class="toast"></div>
