@@ -1,5 +1,6 @@
 // --- LOGIKA GLOBAL ---
 let cart = JSON.parse(localStorage.getItem('ciimut_cart')) || [];
+let currentSelectedItem = null; // Untuk menampung data item yang sedang dipilih
 
 function updateCartCount() {
     const cartIcon = document.querySelector('.cart-icon span');
@@ -8,36 +9,83 @@ function updateCartCount() {
     }
 }
 
-// --- LOGIKA HALAMAN ORDER ---
-if (document.querySelector('.btn-add')) {
-    document.querySelectorAll('.btn-add').forEach((button) => {
-        button.addEventListener('click', () => {
-            const card = button.closest('.card'); // Mencari parent card terdekat
-            const name = card.querySelector('h4').innerText;
-            const priceText = card.querySelector('.price').innerText;
-            const price = parseInt(priceText.replace(/[^0-9]/g, ''));
+// --- LOGIKA HALAMAN ORDER (DENGAN MODAL) ---
+const modal = document.getElementById("modal-flavor");
 
-            // Tambah ke array
-            cart.push({ name, price });
-            
-            // Simpan ke LocalStorage
-            localStorage.setItem('ciimut_cart', JSON.stringify(cart));
-            
-            function showToast(message) {
-                const toast = document.getElementById("toast");
-                toast.innerText = message;
+    // Fungsi untuk menampilkan atau menyembunyikan gambar QRIS
+function toggleQRIS(show) {
+    const qrisContainer = document.getElementById('qris-container');
+    if (qrisContainer) {
+        qrisContainer.style.display = show ? 'block' : 'none';
+    }
+}
 
-                toast.classList.add("show");
+// Fungsi untuk menyiapkan data sebelum modal dibuka
+function prepareOrder(button) {
+    const card = button.closest('.card');
+    const name = card.querySelector('h4').innerText;
+    const priceText = card.querySelector('.price').innerText;
+    const price = parseInt(priceText.replace(/[^0-9]/g, ''));
 
-                setTimeout(() => {
-                    toast.classList.remove("show");
-                }, 2000);
-            }
+    // Simpan ke variabel global yang sudah Anda buat di baris 3
+    currentSelectedItem = { name, price };
+    
+    // Update teks judul di dalam modal
+    const modalTitle = document.getElementById('modal-item-name');
+    if(modalTitle) modalTitle.innerText = `Pilih Rasa: ${name}`;
+    
+    // Reset semua checkbox varian agar tidak terpilih otomatis
+    document.querySelectorAll('.flavor-cb').forEach(cb => cb.checked = false);
+    
+    // Tampilkan modal
+    if (modal) {
+        modal.style.display = "flex";
+    }
+}
 
-            showToast(`${name} ditambahkan ke keranjang!`);
-            updateCartCount();
-        });
+function closeModal() {
+    if (modal) modal.style.display = "none";
+}
+
+function confirmOrder() {
+    const selectedFlavors = [];
+    document.querySelectorAll('.flavor-cb:checked').forEach((cb) => {
+        selectedFlavors.push(cb.value);
     });
+
+    if (selectedFlavors.length === 0) {
+        alert("Silahkan pilih minimal satu varian!");
+        return;
+    }
+
+    // Gabungkan nama produk dengan pilihan rasa untuk keranjang
+    const finalName = `${currentSelectedItem.name} (${selectedFlavors.join(", ")})`;
+    
+    // Logika simpan ke keranjang (mirip kode lama Anda)
+    cart.push({ name: finalName, price: currentSelectedItem.price });
+    localStorage.setItem('ciimut_cart', JSON.stringify(cart));
+    
+    showToast(`${currentSelectedItem.name} ditambahkan!`);
+    updateCartCount();
+    closeModal();
+}
+
+// Fungsi Toast dipindah ke luar agar bisa diakses global
+function showToast(message) {
+    const toast = document.getElementById("toast");
+    if (!toast) return;
+    toast.innerText = message;
+    toast.classList.add("show");
+    setTimeout(() => {
+        toast.classList.remove("show");
+    }, 2000);
+}
+
+// Tutup modal jika klik di luar box putih
+window.onclick = function(event) {
+    if (event.target == modal) {
+        closeModal();
+    }
 }
 
 
@@ -149,24 +197,28 @@ if (document.querySelector('.order-items')) {
     renderCheckout();
     }
 
-    form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const nama = form.querySelector('input[type="text"]').value;
-        const alamat = form.querySelector('textarea').value;
+   form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const nama = form.querySelector('input[type="text"]').value;
+    const alamat = form.querySelector('textarea').value;
+    
+    // Mengambil nilai metode pembayaran yang dipilih
+    const metodeBayar = form.querySelector('input[name="payment"]:checked').value;
 
-        let pesan = `Halo Ciimut! Saya ingin pesan:%0A%0A*Nama:* ${nama}%0A*Alamat:* ${alamat}%0A%0A*Pesanan:*%0A`;
-        
-        cart.forEach((item, i) => {
-            pesan += `${i+1}. ${item.name} (Rp ${item.price.toLocaleString('id-ID')})%0A`;
-        });
-
-        const totalFinal = cart.reduce((sum, item) => sum + item.price, 0);
-        pesan += `%0A*Total: Rp ${totalFinal.toLocaleString('id-ID')}*`;
-
-        window.open(`https://wa.me/6285959197918?text=${pesan}`, '_blank');
-        localStorage.removeItem('ciimut_cart');
-        location.reload();
+    //commad menambahkan pesan dalam string pesan
+    let pesan = `Halo Ciimut! Saya ingin pesan:%0A%0A*Nama:* ${nama}%0A*Alamat:* ${alamat}%0A*Metode Pembayaran:* ${metodeBayar}%0A%0A*Pesanan:*%0A`;
+    
+    cart.forEach((item, i) => {
+        pesan += `${i+1}. ${item.name} (Rp ${item.price.toLocaleString('id-ID')})%0A`;
     });
+
+    const totalFinal = cart.reduce((sum, item) => sum + item.price, 0);
+    pesan += `%0A*Total: Rp ${totalFinal.toLocaleString('id-ID')}*`;
+
+    window.open(`https://wa.me/6285959197918?text=${pesan}`, '_blank');
+    localStorage.removeItem('ciimut_cart');
+    location.reload();
+});
 
     renderCheckout();
     }
@@ -195,8 +247,9 @@ if (document.querySelector('.order-items')) {
         e.preventDefault();
         const nama = form.querySelector('input[type="text"]').value;
         const alamat = form.querySelector('textarea').value;
+        const catatan = document.getElementById('catatan').value || "-";
 
-        let pesan = `Halo Ciimut! Saya ingin pesan:%0A%0A*Nama:* ${nama}%0A*Alamat:* ${alamat}%0A%0A*Pesanan:*%0A`;
+        let pesan = `Halo Ciimut! Saya ingin pesan:%0A%0A*Nama:* ${nama}%0A*Alamat:* ${alamat}%0A%0A*Pesanan:*%0A%0A*Catatan:* ${catatan}`;
         
         cart.forEach((item, i) => {
             pesan += `${i+1}. ${item.name} (Rp ${item.price.toLocaleString('id-ID')})%0A`;
@@ -235,3 +288,4 @@ wrapper.addEventListener('scroll', () => {
         dot.classList.toggle('active', i === index);
     });
 });
+
