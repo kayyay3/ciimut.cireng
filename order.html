@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ciimut - Order Menu</title>
+    <link rel="stylesheet" href="css/order.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header class="header">
+        <div class="logo-section">
+    <div class="logo-container">
+        <img src="aset/WhatsApp Image 2026-04-14 at 09.19.52.jpeg" alt="Logo Ciimut" class="main-logo">
+    </div>
+    <div>
+        <a href="home.html" class="logo-link">
+            <h2 class="brand-name-small">Ciimut</h2> 
+            <p class="sub-brand">Camilan Enak & Lezat</p>
+        </a>
+    </div>
+</div>
+        </div>
+        <div class="cart-icon">
+            <a href="checkout.html" class="cart-icon">
+                <span>🛒</span>
+            </a>
+        </div>
+    </header>
+
+   <main class="container">
+        <h3 class="category-title">PILIH PAKET BOX</h3>
+        <p style="margin-bottom: 20px; color: #666;">Promo pre-order special grand opening Ciimut. <br>
+             + 1 free Chili oil untuk semua ukuran box. <br> <span style="color: #e67e22;">🔥 Free Chili Oil !!!</span></p>
+        
+        <div class="menu-grid">
+            <div class="card">
+                <div class="card-img">
+                    <img src="aset/Cireng Isi Keju Lumer _Ayam Suwir_Baso Mercon_Jando_Sosis Pedas 8 Pcs Cemilan Frozen Food.jfif" alt="Box Kecil">
+                </div>
+                <div class="card-body">
+                    <h4>1 Box Kecil</h4>
+                    <p>berisi 4 cireng yang bisa dipilih untuk varian dan bisa di mix juga.</p>
+                    <div class="price">Rp 8.000</div>
+                    <button class="btn-add" onclick="prepareOrder(this)">PILIH</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-img">
+                    <img src="aset/CIRENG AYAM SUIR ISI 8.jpg" alt="Box Besar">
+                </div>
+                <div class="card-body">
+                    <h4>1 Box Besar</h4>
+                    <p>Porsi lebih puas! Mix varian sesukamu (Ayam Suwir, Keju, Kornet) + free chili oil.</p>
+                    <div class="price">Rp 10.000</div>
+                    <button class="btn-add" onclick="prepareOrder(this)">PILIH</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="modal-flavor" class="modal" style="display: none;">
+    <div class="modal-content">
+        <h3 id="modal-item-name">Pilih Varian</h3>
+       <div class="flavor-options">
+    <div class="option-item">
+        <input type="radio" id="ayam" name="flavor" class="flavor-cb" value="Ayam Suwir">
+        <label for="ayam">Ayam Suwir</label>
+    </div>
+    <div class="option-item">
+        <input type="radio" id="keju" name="flavor" class="flavor-cb" value="Keju">
+        <label for="keju">Keju</label>
+    </div>
+    <div class="option-item">
+        <input type="radio" id="kornet" name="flavor" class="flavor-cb" value="Kornet">
+        <label for="kornet">Kornet</label>
+    </div>
+    <div class="option-item">
+        <input type="radio" id="mix" name="flavor" class="flavor-cb" value="Mix">
+        <label for="mix">Mix</label>
+    </div>
+</div>
+        <div class="modal-footer">
+            <button type="button" class="btn-secondary" onclick="closeModal()">Batal</button>
+            <button type="button" class="btn-primary" onclick="confirmOrder()">OK</button>
+        </div>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+
+<div id="toast" class="toast"></div>
+
+</html>
