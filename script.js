@@ -199,26 +199,39 @@ if (document.querySelector('.order-items')) {
 
    form.addEventListener('submit', (e) => {
     e.preventDefault();
-    const nama = form.querySelector('input[type="text"]').value;
-    const alamat = form.querySelector('textarea').value;
-    
-    // Mengambil nilai metode pembayaran yang dipilih
-    const metodeBayar = form.querySelector('input[name="payment"]:checked').value;
 
-    //commad menambahkan pesan dalam string pesan
-    let pesan = `Halo Ciimut! Saya ingin pesan:%0A%0A*Nama:* ${nama}%0A*Alamat:* ${alamat}%0A*Metode Pembayaran:* ${metodeBayar}%0A%0A*Pesanan:*%0A`;
-    
+    const nama = form.querySelector('input[type="text"]').value;
+    const alamat = document.getElementById('alamat').value;
+    const catatan = document.getElementById('catatan').value || "-";
+
+    const metodeBayar =
+        form.querySelector('input[name="payment"]:checked').value;
+
+    let pesan =
+    `Halo Ciimut! Saya ingin pesan:%0A%0A
+    *Nama:* ${nama}%0A
+    *Alamat:* ${alamat}%0A
+    *Metode Pembayaran:* ${metodeBayar}%0A
+    *Catatan:* ${catatan}%0A%0A
+    *Pesanan:*%0A`;
+
     cart.forEach((item, i) => {
-        pesan += `${i+1}. ${item.name} (Rp ${item.price.toLocaleString('id-ID')})%0A`;
+        pesan += `${i + 1}. ${item.name} (Rp ${item.price.toLocaleString('id-ID')})%0A`;
     });
 
-    const totalFinal = cart.reduce((sum, item) => sum + item.price, 0);
+    const totalFinal =
+        cart.reduce((sum, item) => sum + item.price, 0);
+
     pesan += `%0A*Total: Rp ${totalFinal.toLocaleString('id-ID')}*`;
 
-    window.open(`https://wa.me/6285959197918?text=${pesan}`, '_blank');
+    window.open(
+        `https://wa.me/6285959197918?text=${pesan}`,
+        '_blank'
+    );
+
     localStorage.removeItem('ciimut_cart');
     location.reload();
-});
+    });
 
     renderCheckout();
     }
@@ -249,7 +262,12 @@ if (document.querySelector('.order-items')) {
         const alamat = form.querySelector('textarea').value;
         const catatan = document.getElementById('catatan').value || "-";
 
-        let pesan = `Halo Ciimut! Saya ingin pesan:%0A%0A*Nama:* ${nama}%0A*Alamat:* ${alamat}%0A%0A*Pesanan:*%0A%0A*Catatan:* ${catatan}`;
+        let pesan = `Halo Ciimut! Saya ingin pesan:%0A%0A
+        *Nama:* ${nama}%0A
+        *Alamat:* ${alamat}%0A
+        *Metode Pembayaran:* ${metodeBayar}%0A
+        *Catatan:* ${catatan}%0A%0A
+        *Pesanan:*%0A`;
         
         cart.forEach((item, i) => {
             pesan += `${i+1}. ${item.name} (Rp ${item.price.toLocaleString('id-ID')})%0A`;
